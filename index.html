@@ -776,6 +776,26 @@
     }
     .enemy-dying { animation: enemy-hit 0.35s ease-out forwards; }
 
+    /* ===== 游戏计时器 ===== */
+    #game-timer {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 15px;
+      font-weight: 700;
+      color: #e2e8f0;
+      letter-spacing: 2px;
+      font-variant-numeric: tabular-nums;
+      display: none;
+      z-index: 100;
+      background: rgba(0,0,0,0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    #game-timer.visible { display: block; }
+
     /* ===== 暂停按钮 ===== */
     #pause-btn {
       position: absolute;
@@ -933,23 +953,36 @@
     #level-cards {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 8px;
       width: 300px;
+      /* 原来3关的高度：3张卡(68px) + 2个间距(8px) = 220px，加标题大约430px */
+      /* 现在最多显示5张：5×68 + 4×8 = 372px */
+      max-height: 372px;
+      overflow-y: auto;
+      padding-right: 4px;
+      scrollbar-width: thin;
+      scrollbar-color: #2d3748 transparent;
     }
+    #level-cards::-webkit-scrollbar { width: 4px; }
+    #level-cards::-webkit-scrollbar-track { background: transparent; }
+    #level-cards::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 2px; }
 
     .level-card {
       width: 100%;
-      padding: 20px 24px;
+      padding: 12px 18px;
       background: #1e2a3a;
-      border-radius: 16px;
+      border-radius: 14px;
       border: 2px solid #2d3748;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 16px;
       transition: border-color 0.2s, transform 0.15s, background 0.2s;
       position: relative;
       overflow: hidden;
+      flex-shrink: 0;
+      height: 68px;
+      box-sizing: border-box;
     }
     .level-card:hover {
       border-color: #F6C026;
@@ -1117,6 +1150,41 @@
       color: #a0aec0;
       letter-spacing: 2px;
       animation: victory-pop 0.4s 0.25s ease both;
+    }
+
+    #victory-time-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      animation: victory-pop 0.4s 0.3s ease both;
+    }
+
+    #victory-time {
+      font-size: 28px;
+      font-weight: 900;
+      color: #F6C026;
+      letter-spacing: 3px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    #victory-best {
+      font-size: 13px;
+      color: #718096;
+      letter-spacing: 1px;
+    }
+
+    #victory-new-record {
+      font-size: 13px;
+      font-weight: 800;
+      color: #F6C026;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: victory-pop 0.5s 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+      background: rgba(246,192,38,0.1);
+      border: 1px solid rgba(246,192,38,0.3);
+      padding: 4px 14px;
+      border-radius: 20px;
     }
 
     #btn-next-level {
@@ -1287,6 +1355,92 @@
     }
     #btn-skip-black:hover { color: #718096; border-color: #4a5568; }
 
+    /* ===== 玩法提示界面 ===== */
+    #tutorial-screen {
+      background: rgba(10,15,30,0.93);
+      gap: 28px;
+      z-index: 220;
+    }
+
+    #tutorial-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: #F6C026;
+      letter-spacing: 3px;
+      animation: victory-pop 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+
+    #tutorial-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      animation: victory-pop 0.4s 0.1s ease both;
+    }
+
+    .tutorial-step {
+      width: 280px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .tutorial-icon {
+      font-size: 36px;
+      flex-shrink: 0;
+    }
+
+    .tutorial-text {
+      text-align: left;
+    }
+
+    .tutorial-text strong {
+      display: block;
+      font-size: 14px;
+      color: #e2e8f0;
+      margin-bottom: 4px;
+    }
+
+    .tutorial-text span {
+      font-size: 12px;
+      color: #718096;
+      line-height: 1.5;
+    }
+
+    /* 箭头跳动动画 */
+    @keyframes bounce-down {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(8px); }
+    }
+    .tutorial-arrow {
+      font-size: 28px;
+      color: #F6C026;
+      animation: bounce-down 0.8s ease-in-out infinite;
+    }
+
+    #btn-tutorial-start {
+      padding: 16px 56px;
+      background: linear-gradient(135deg, #F6C026, #d4a017);
+      color: #1a1a2e;
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #a07810, 0 0 20px rgba(246,192,38,0.4);
+      animation: victory-pop 0.5s 0.25s cubic-bezier(0.34,1.56,0.64,1) both;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    #btn-tutorial-start:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #a07810;
+    }
+
     /* ===== 标题 ===== */
     #title {
       position: absolute;
@@ -1306,6 +1460,9 @@
 
   <div id="title">LOOP</div>
 
+  <!-- 游戏计时器 -->
+  <div id="game-timer">00:00</div>
+
   <!-- 暂停按钮 -->
   <button id="pause-btn" onclick="togglePause()">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -1313,6 +1470,37 @@
       <rect x="15" y="3" width="4" height="18" rx="1"/>
     </svg>
   </button>
+
+  <!-- 玩法提示界面 -->
+  <div id="tutorial-screen" class="screen">
+    <div id="tutorial-title">如何战斗？</div>
+    <div id="tutorial-body">
+      <div class="tutorial-step">
+        <div class="tutorial-icon">👇</div>
+        <div class="tutorial-text">
+          <strong>点击下方彩色方块</strong>
+          <span>选择一个方块送上传送带</span>
+        </div>
+      </div>
+      <div class="tutorial-arrow">↓</div>
+      <div class="tutorial-step">
+        <div class="tutorial-icon">➡️</div>
+        <div class="tutorial-text">
+          <strong>传送带自动向右传送</strong>
+          <span>方块会在传送带上从左移动到右边</span>
+        </div>
+      </div>
+      <div class="tutorial-arrow">↓</div>
+      <div class="tutorial-step">
+        <div class="tutorial-icon">🎯</div>
+        <div class="tutorial-text">
+          <strong>颜色匹配自动攻击</strong>
+          <span>遇到颜色相同的敌人<br>会自动发射子弹消灭它</span>
+        </div>
+      </div>
+    </div>
+    <button id="btn-tutorial-start" onclick="closeTutorial()">开始战斗！</button>
+  </div>
 
   <!-- 暂停界面 -->
   <div id="pause-screen" class="screen">
@@ -1342,29 +1530,68 @@
     <div id="level-cards">
       <div class="level-card" id="lcard-1" onclick="startLevel(1)">
         <div class="level-num">1</div>
-        <div class="level-info">
-          <div class="level-name">初级防线</div>
-          <div class="level-desc">熟悉基础战斗机制</div>
-        </div>
+        <div class="level-info"><div class="level-name">初级防线</div><div class="level-desc">熟悉基础战斗机制</div></div>
         <div class="level-stars" id="lstar-1">☆☆☆</div>
       </div>
       <div class="level-card locked" id="lcard-2" onclick="startLevel(2)">
         <div class="level-num">2</div>
-        <div class="level-info">
-          <div class="level-name">强化阵地</div>
-          <div class="level-desc">敌人更多，节奏更快</div>
-        </div>
+        <div class="level-info"><div class="level-name">强化阵地</div><div class="level-desc">敌人更多，节奏更快</div></div>
         <div class="level-stars" id="lstar-2">☆☆☆</div>
         <div class="level-lock-icon" id="llock-2">🔒</div>
       </div>
       <div class="level-card locked" id="lcard-3" onclick="startLevel(3)">
         <div class="level-num">3</div>
-        <div class="level-info">
-          <div class="level-name">最终决战</div>
-          <div class="level-desc">Boss 血量翻倍，全力以赴</div>
-        </div>
+        <div class="level-info"><div class="level-name">猛攻之势</div><div class="level-desc">敌人数量大幅增加</div></div>
         <div class="level-stars" id="lstar-3">☆☆☆</div>
         <div class="level-lock-icon" id="llock-3">🔒</div>
+      </div>
+      <div class="level-card locked" id="lcard-4" onclick="startLevel(4)">
+        <div class="level-num">4</div>
+        <div class="level-info"><div class="level-name">铁壁攻防</div><div class="level-desc">节奏加快，考验反应</div></div>
+        <div class="level-stars" id="lstar-4">☆☆☆</div>
+        <div class="level-lock-icon" id="llock-4">🔒</div>
+      </div>
+      <div class="level-card locked" id="lcard-5" onclick="startLevel(5)">
+        <div class="level-num">5</div>
+        <div class="level-info"><div class="level-name">钢铁意志</div><div class="level-desc">Boss 变强，需要策略</div></div>
+        <div class="level-stars" id="lstar-5">☆☆☆</div>
+        <div class="level-lock-icon" id="llock-5">🔒</div>
+      </div>
+      <div class="level-card locked" id="lcard-6" onclick="startLevel(6)">
+        <div class="level-num">6</div>
+        <div class="level-info"><div class="level-name">血与火</div><div class="level-desc">敌军浩浩荡荡</div></div>
+        <div class="level-stars" id="lstar-6">☆☆☆</div>
+        <div class="level-lock-icon" id="llock-6">🔒</div>
+      </div>
+      <div class="level-card locked" id="lcard-7" onclick="startLevel(7)">
+        <div class="level-num">7</div>
+        <div class="level-info"><div class="level-name">极限突破</div><div class="level-desc">速度与数量的双重挑战</div></div>
+        <div class="level-stars" id="lstar-7">☆☆☆</div>
+        <div class="level-lock-icon" id="llock-7">🔒</div>
+      </div>
+      <div class="level-card locked" id="lcard-8" onclick="startLevel(8)">
+        <div class="level-num">8</div>
+        <div class="level-info"><div class="level-name">末日危机</div><div class="level-desc">Boss 血量倍增</div></div>
+        <div class="level-stars" id="lstar-8">☆☆☆</div>
+        <div class="level-lock-icon" id="llock-8">🔒</div>
+      </div>
+      <div class="level-card locked" id="lcard-9" onclick="startLevel(9)">
+        <div class="level-num">9</div>
+        <div class="level-info"><div class="level-name">决死一战</div><div class="level-desc">敌人无穷无尽</div></div>
+        <div class="level-stars" id="lstar-9">☆☆☆</div>
+        <div class="level-lock-icon" id="llock-9">🔒</div>
+      </div>
+      <div class="level-card locked" id="lcard-10" onclick="startLevel(10)">
+        <div class="level-num">10</div>
+        <div class="level-info"><div class="level-name">王者之战</div><div class="level-desc">极限速度，极限数量</div></div>
+        <div class="level-stars" id="lstar-10">☆☆☆</div>
+        <div class="level-lock-icon" id="llock-10">🔒</div>
+      </div>
+      <div class="level-card locked" id="lcard-11" onclick="startLevel(11)">
+        <div class="level-num">11</div>
+        <div class="level-info"><div class="level-name">终极传说</div><div class="level-desc">最终考验，传说级难度</div></div>
+        <div class="level-stars" id="lstar-11">☆☆☆</div>
+        <div class="level-lock-icon" id="llock-11">🔒</div>
       </div>
     </div>
   </div>
@@ -1374,7 +1601,13 @@
     <div id="victory-stars">⭐⭐⭐</div>
     <div id="victory-title">VICTORY!</div>
     <div id="victory-level">第 <span id="victory-level-num">1</span> 关 完成</div>
-    <!-- 奖励展示（第1关才显示，告知下一关解锁黑块） -->
+    <!-- 时间统计 -->
+    <div id="victory-time-wrap">
+      <div id="victory-time">00:00</div>
+      <div id="victory-best">最佳记录：--:--</div>
+      <div id="victory-new-record" style="display:none">新记录！</div>
+    </div>
+    <!-- 奖励展示 -->
     <div id="victory-reward">
       <div id="victory-reward-label">🎁 解锁奖励</div>
       <div id="victory-reward-block">3×3</div>
@@ -1534,13 +1767,21 @@
   const BULLET_SPEED    = 500;
   const BULLET_COUNTS   = [8, 12, 20];
   const BOSS_MAX_HP     = 5;
-  const MAX_LEVELS      = 3;
+  const MAX_LEVELS      = 11;
 
-  // 关卡配置
+  // 关卡配置（第3关起难度依次递增）
   const LEVEL_CONFIG = {
-    1: { bossHp: 2,  speed: 55,  enemyCount: 35  },
-    2: { bossHp: 2,  speed: 70,  enemyCount: 60  },
-    3: { bossHp: 2,  speed: 90,  enemyCount: 90  },
+    1:  { bossHp: 2,  speed: 55,  enemyCount: 35  },
+    2:  { bossHp: 2,  speed: 70,  enemyCount: 60  },
+    3:  { bossHp: 2,  speed: 90,  enemyCount: 90  },
+    4:  { bossHp: 3,  speed: 100, enemyCount: 110 },
+    5:  { bossHp: 3,  speed: 110, enemyCount: 130 },
+    6:  { bossHp: 4,  speed: 120, enemyCount: 150 },
+    7:  { bossHp: 4,  speed: 130, enemyCount: 170 },
+    8:  { bossHp: 5,  speed: 140, enemyCount: 190 },
+    9:  { bossHp: 5,  speed: 150, enemyCount: 210 },
+    10: { bossHp: 6,  speed: 160, enemyCount: 230 },
+    11: { bossHp: 7,  speed: 170, enemyCount: 250 },
   };
 
   // 已解锁关卡（从localStorage读取）
@@ -1777,7 +2018,12 @@
   let availableSlots   = [];
   let selectCooldown   = false; // 点击后冷却，防止连点
 
-  function randomType() {
+  function randomType(currentType) {
+    // 90% 概率换成不同颜色，10% 概率保持相同
+    if (currentType && Math.random() > 0.1) {
+      const others = ALL_TYPES.filter(t => t !== currentType);
+      return others[Math.floor(Math.random() * others.length)];
+    }
     return ALL_TYPES[Math.floor(Math.random() * ALL_TYPES.length)];
   }
 
@@ -1814,6 +2060,7 @@
     if (btn.classList.contains('locked')) return;
     if (selectCooldown) return;
 
+    sfxClick();
     selectCooldown = true;
     const type  = btn.dataset.type;
     const inner = btn.querySelector('.shape');
@@ -1834,7 +2081,7 @@
 
     // 换新图形并重新开放选择
     const slotIdx = parseInt(btn.dataset.slot);
-    const newType = randomType();
+    const newType = randomType(type); // 传入当前颜色，降低相同概率
     slotTypes[slotIdx] = newType;
     setTimeout(() => {
       renderBottomSlot(btn, newType);
@@ -1868,6 +2115,7 @@
     const data = uiSlots[idx];
     if (!data) return;
     const { type, bullets } = data;
+    sfxClick();
     clearUiSlot(slotEl, idx);
     launchToConveyor(type, bullets, slotEl);
   }
@@ -1895,6 +2143,7 @@
 
     setTimeout(() => {
       document.body.removeChild(flying);
+      sfxLaunch();
       placeOnConveyor(type, bullets);
     }, 320);
   }
@@ -2094,6 +2343,7 @@
     bullet.style.cssText = `left:${startX - 5}px;top:${startY - 7}px;`;
     document.body.appendChild(bullet);
 
+    sfxShoot();
     requestAnimationFrame(() => {
       bullet.style.transition = `top ${duration.toFixed(0)}ms linear`;
       bullet.style.top = (endY - 7) + 'px';
@@ -2177,6 +2427,7 @@
       const boss = document.getElementById('boss');
       if (!boss) return;
       boss.dataset.dead = '1';
+      sfxBossHit();
       boss.classList.add('boss-dying');
 
       setTimeout(() => {
@@ -2185,6 +2436,7 @@
       }, 600);
     } else {
       const col = enemy.dataset.col;
+      sfxEnemyDie();
       enemy.classList.add('enemy-dying');
       setTimeout(() => {
         enemy.remove();
@@ -2203,6 +2455,7 @@
   }
 
   function showLevelSelect() {
+    document.getElementById('title').style.display = 'none';
     // 更新关卡卡片锁定状态和星星
     for (let i = 1; i <= MAX_LEVELS; i++) {
       const card  = document.getElementById(`lcard-${i}`);
@@ -2231,13 +2484,22 @@
     gameOver         = false;
 
     isPaused = false;
-    showScreen(null); // 隐藏所有覆盖层，露出游戏区
-    showPauseBtn(true);
+    document.getElementById('title').style.display = 'none';
+    showScreen(null);
     resetGame();
+
+    // 第一关显示玩法提示（关闭后才计时），其他关直接计时
+    if (lv === 1) {
+      showScreen('tutorial-screen');
+    } else {
+      showPauseBtn(true);
+      startTimer();
+    }
   }
 
   function backToHome() {
     showPauseBtn(false);
+    document.getElementById('title').style.display = '';
     showScreen('start-screen');
   }
 
@@ -2250,6 +2512,14 @@
     showPauseBtn(false);
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
 
+    // 停止计时，记录结果
+    const elapsed = getElapsed();
+    stopTimer();
+    const bestKey = `loop_best_${currentLevel}`;
+    const prevBest = parseInt(localStorage.getItem(bestKey) || '0');
+    const isNewRecord = !prevBest || elapsed < prevBest;
+    if (isNewRecord) localStorage.setItem(bestKey, elapsed);
+
     // 保存通关记录，解锁下一关
     localStorage.setItem(`loop_clear_${currentLevel}`, '1');
     if (currentLevel < MAX_LEVELS) {
@@ -2258,9 +2528,18 @@
     }
 
     if (currentLevel >= MAX_LEVELS) {
+      // 更新通关界面时间
       setTimeout(() => showScreen('clear-screen'), 400);
     } else {
       document.getElementById('victory-level-num').textContent = currentLevel;
+
+      // 时间显示
+      document.getElementById('victory-time').textContent = formatTime(elapsed);
+      const bestMs = parseInt(localStorage.getItem(`loop_best_${currentLevel}`) || '0');
+      document.getElementById('victory-best').textContent =
+        `最佳记录：${bestMs ? formatTime(bestMs) : '--:--'}`;
+      document.getElementById('victory-new-record').style.display =
+        isNewRecord && prevBest ? '' : 'none';
       const reward      = document.getElementById('victory-reward');
       const rewardBlock = document.getElementById('victory-reward-block');
       const rewardDesc  = document.getElementById('victory-reward-desc');
@@ -2298,6 +2577,8 @@
     isPaused = false;
     showPauseBtn(false);
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    stopTimer();
+    sfxDefeat();
     setTimeout(() => showScreen('defeat-screen'), 300);
   }
 
@@ -2450,6 +2731,7 @@
       transform:scale(0);
       transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease 0.2s;
     `;
+    sfxExplosion();
     document.body.appendChild(boom);
     requestAnimationFrame(() => {
       boom.style.transform = 'scale(1)';
@@ -2515,6 +2797,7 @@
     const COL_TOL = 8; // 同列容差（px）
     const ROW_TOL = 8; // 同行容差（px）
 
+    sfxExplosion();
     // 视觉：横竖光束
     const colors = 'rgba(159,122,234,0.9), rgba(107,70,193,0.6)';
     ['h', 'v'].forEach(dir => {
@@ -2623,6 +2906,7 @@
     }
 
     uiSlots[emptyIdx] = { type, bullets };
+    sfxSlotDrop();
     const slotEl = document.querySelectorAll('.slot')[emptyIdx];
     renderUiSlot(slotEl, type, bullets);
 
@@ -2745,6 +3029,70 @@
   }
 
   // ===================================================
+  // 计时器系统
+  // ===================================================
+  let timerStart   = 0;   // 开始时间戳
+  let timerPaused  = 0;   // 暂停时累计的已用时间(ms)
+  let timerPauseAt = 0;   // 暂停时刻
+  let timerInterval = null;
+
+  function formatTime(ms) {
+    const totalSec = Math.floor(ms / 1000);
+    const min = Math.floor(totalSec / 60).toString().padStart(2, '0');
+    const sec = (totalSec % 60).toString().padStart(2, '0');
+    return `${min}:${sec}`;
+  }
+
+  function startTimer() {
+    timerStart   = Date.now();
+    timerPaused  = 0;
+    timerPauseAt = 0;
+    document.getElementById('game-timer').classList.add('visible');
+    updateTimerDisplay();
+    timerInterval = setInterval(updateTimerDisplay, 500);
+  }
+
+  function pauseTimer() {
+    if (timerPauseAt) return; // 已暂停
+    timerPauseAt = Date.now();
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+
+  function resumeTimer() {
+    if (!timerPauseAt) return;
+    timerPaused  += Date.now() - timerPauseAt;
+    timerPauseAt  = 0;
+    timerInterval = setInterval(updateTimerDisplay, 500);
+  }
+
+  function stopTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    document.getElementById('game-timer').classList.remove('visible');
+  }
+
+  function getElapsed() {
+    const pausedMs = timerPauseAt
+      ? timerPaused + (Date.now() - timerPauseAt)
+      : timerPaused;
+    return Date.now() - timerStart - pausedMs;
+  }
+
+  function updateTimerDisplay() {
+    document.getElementById('game-timer').textContent = formatTime(getElapsed());
+  }
+
+  // ===================================================
+  // 玩法提示
+  // ===================================================
+  function closeTutorial() {
+    showScreen(null);
+    showPauseBtn(true);
+    startTimer(); // 教程关闭后才开始计时
+  }
+
+  // ===================================================
   // 暂停系统
   // ===================================================
   let isPaused = false;
@@ -2753,12 +3101,12 @@
     if (gameOver) return;
     isPaused = !isPaused;
     if (isPaused) {
-      // 暂停：停止循环，显示暂停界面
       if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+      pauseTimer();
       document.getElementById('pause-screen').classList.add('show');
     } else {
-      // 继续：隐藏暂停界面，重启循环
       document.getElementById('pause-screen').classList.remove('show');
+      resumeTimer();
       if (conveyorItems.length > 0) {
         lastTs = null;
         rafId = requestAnimationFrame(gameLoop);
@@ -2770,6 +3118,7 @@
     isPaused = false;
     gameOver = false;
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    stopTimer();
     document.getElementById('pause-btn').classList.remove('visible');
     showScreen('level-screen');
     showLevelSelect();
@@ -2779,6 +3128,109 @@
   function showPauseBtn(visible) {
     const btn = document.getElementById('pause-btn');
     btn.classList.toggle('visible', visible);
+  }
+
+  // ===================================================
+  // 音效系统（Web Audio API）
+  // ===================================================
+  let audioCtx = null;
+
+  function getAudioCtx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    return audioCtx;
+  }
+
+  // 基础音效生成器
+  function playSound({ type = 'sine', freq = 440, endFreq, gain = 0.3, duration = 0.15, delay = 0 }) {
+    try {
+      const ctx  = getAudioCtx();
+      const osc  = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+      osc.connect(gainNode);
+      gainNode.connect(ctx.destination);
+
+      osc.type = type;
+      const now = ctx.currentTime + delay;
+      osc.frequency.setValueAtTime(freq, now);
+      if (endFreq) osc.frequency.exponentialRampToValueAtTime(endFreq, now + duration);
+
+      gainNode.gain.setValueAtTime(gain, now);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+      osc.start(now);
+      osc.stop(now + duration);
+    } catch(e) {}
+  }
+
+  // 叠加多个音效
+  function playSounds(sounds) {
+    sounds.forEach(s => playSound(s));
+  }
+
+  // ===== 各场景音效 =====
+
+  // 点击方块（轻弹）
+  function sfxClick() {
+    playSound({ type: 'sine', freq: 520, endFreq: 380, gain: 0.25, duration: 0.1 });
+  }
+
+  // 方块上传送带
+  function sfxLaunch() {
+    playSounds([
+      { type: 'sine',   freq: 300, endFreq: 600, gain: 0.2, duration: 0.12 },
+      { type: 'square', freq: 200, endFreq: 400, gain: 0.08, duration: 0.12 },
+    ]);
+  }
+
+  // 子弹发射
+  function sfxShoot() {
+    playSound({ type: 'square', freq: 880, endFreq: 440, gain: 0.12, duration: 0.08 });
+  }
+
+  // 敌人被消灭
+  function sfxEnemyDie() {
+    playSounds([
+      { type: 'sine',     freq: 440, endFreq: 220, gain: 0.18, duration: 0.12 },
+      { type: 'triangle', freq: 330, endFreq: 110, gain: 0.1,  duration: 0.15, delay: 0.04 },
+    ]);
+  }
+
+  // 方块落入 UI 格子
+  function sfxSlotDrop() {
+    playSounds([
+      { type: 'sine', freq: 600, endFreq: 800, gain: 0.2, duration: 0.08 },
+      { type: 'sine', freq: 800, endFreq: 600, gain: 0.15, duration: 0.08, delay: 0.08 },
+    ]);
+  }
+
+  // 宝箱被击中（胜利）
+  function sfxBossHit() {
+    playSounds([
+      { type: 'sine',   freq: 523, gain: 0.3, duration: 0.12 },
+      { type: 'sine',   freq: 659, gain: 0.3, duration: 0.12, delay: 0.1 },
+      { type: 'sine',   freq: 784, gain: 0.3, duration: 0.15, delay: 0.2 },
+      { type: 'sine',   freq: 1047, gain: 0.35, duration: 0.3, delay: 0.32 },
+      { type: 'triangle', freq: 523, gain: 0.2, duration: 0.4, delay: 0.32 },
+    ]);
+  }
+
+  // 黑色/紫色方块爆炸
+  function sfxExplosion() {
+    playSounds([
+      { type: 'sawtooth', freq: 120, endFreq: 40,  gain: 0.35, duration: 0.35 },
+      { type: 'square',   freq: 80,  endFreq: 30,  gain: 0.2,  duration: 0.4  },
+      { type: 'sine',     freq: 200, endFreq: 60,  gain: 0.15, duration: 0.3, delay: 0.05 },
+    ]);
+  }
+
+  // 失败音效
+  function sfxDefeat() {
+    playSounds([
+      { type: 'sine', freq: 440, endFreq: 220, gain: 0.3, duration: 0.3 },
+      { type: 'sine', freq: 330, endFreq: 165, gain: 0.25, duration: 0.3, delay: 0.25 },
+      { type: 'sine', freq: 220, endFreq: 110, gain: 0.2, duration: 0.4, delay: 0.5 },
+    ]);
   }
 
   // ===================================================
