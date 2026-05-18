@@ -302,25 +302,25 @@
       justify-content: center;
     }
 
-    /* 黄色方块敌人 */
+    /* 黄色方块敌人 — 扁平 */
     .enemy-cell.type-square {
-      background: linear-gradient(135deg, #fce67a 0%, #F6C026 60%, #d4a017 100%);
-      border: 1.5px solid #c49a10;
-      box-shadow: inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 3px rgba(0,0,0,0.2);
+      background: #F6C026;
+      border: 2px solid #d4a017;
+      border-bottom: 3px solid #a07810;
     }
 
-    /* 红色方块敌人（原三角） */
+    /* 红色方块敌人 — 扁平 */
     .enemy-cell.type-triangle {
-      background: linear-gradient(135deg, #fc8181, #E53E3E);
-      border: 1.5px solid #9b2626;
-      box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), inset 0 -2px 3px rgba(0,0,0,0.2);
+      background: #E53E3E;
+      border: 2px solid #9b2626;
+      border-bottom: 3px solid #7b1c1c;
     }
 
-    /* 蓝色方块敌人（原圆形） */
+    /* 蓝色方块敌人 — 扁平 */
     .enemy-cell.type-circle {
-      background: linear-gradient(135deg, #63b3ed, #4299E1);
-      border: 1.5px solid #2b6cb0;
-      box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), inset 0 -2px 3px rgba(0,0,0,0.2);
+      background: #4299E1;
+      border: 2px solid #2b6cb0;
+      border-bottom: 3px solid #1a4a7a;
     }
 
     /* 保留旧 wall-block 类名兼容（实际由 enemy-cell 替代） */
@@ -354,53 +354,46 @@
       background-color: #4a5568;
     }
 
-    /* ===== 通用图形样式（全部正方块） ===== */
+    /* ===== 通用图形样式（扁平风格） ===== */
     .shape {
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      transition: transform 0.1s;
+      transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1);
       position: relative;
-      border-radius: 7px;
+      border-radius: 8px;
     }
+    .shape:active { transform: scale(0.88); }
 
-    .shape:active { transform: scale(0.9); }
-
-    /* 黄色方块 */
+    /* 黄色方块 — 扁平 */
     .square {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, #fce67a, #F6C026);
-      border-radius: 7px;
-      border: 3px solid #d4a017;
-      box-shadow: 0 4px 0 #a07810, 0 0 12px rgba(246,192,38,0.4);
+      width: 56px; height: 56px;
+      background: #F6C026;
+      border-radius: 8px;
+      border: 2px solid #d4a017;
+      border-bottom: 4px solid #a07810;
     }
 
-    /* 红色方块（原三角） */
+    /* 红色方块 — 扁平 */
     .triangle-wrap {
-      width: 56px;
-      height: 56px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #fc8181, #E53E3E);
-      border-radius: 7px;
-      border: 3px solid #9b2626;
-      box-shadow: 0 4px 0 #7b1c1c, 0 0 12px rgba(229,62,62,0.4);
+      width: 56px; height: 56px;
+      display: flex; justify-content: center; align-items: center;
+      background: #E53E3E;
+      border-radius: 8px;
+      border: 2px solid #9b2626;
+      border-bottom: 4px solid #7b1c1c;
     }
 
-    /* 内部三角元素隐藏（保留节点兼容性） */
     .triangle { display: none; }
 
-    /* 蓝色方块（原圆形） */
+    /* 蓝色方块 — 扁平 */
     .circle {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, #63b3ed, #4299E1);
-      border-radius: 7px;
-      border: 3px solid #2b6cb0;
-      box-shadow: 0 4px 0 #1a4a7a, 0 0 12px rgba(66,153,225,0.4);
+      width: 56px; height: 56px;
+      background: #4299E1;
+      border-radius: 8px;
+      border: 2px solid #2b6cb0;
+      border-bottom: 4px solid #1a4a7a;
     }
 
     /* ===== 传送带区域 ===== */
@@ -568,9 +561,11 @@
       transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1);
     }
 
-    .bottom-shape:hover .shape,
+    .bottom-shape:hover .shape {
+      transform: scale(1.08) translateY(-3px);
+    }
     .bottom-shape:active .shape {
-      transform: scale(1.1) translateY(-4px);
+      transform: scale(0.9) translateY(3px);
     }
 
     /* 底部图形尺寸稍大 */
@@ -633,14 +628,13 @@
       pointer-events: none;
     }
 
-    /* 黑色强化方块 */
+    /* 黑色强化方块 — 扁平 */
     .black-block {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, #2d3748, #1a202c);
-      border-radius: 7px;
-      border: 3px solid #4a5568;
-      box-shadow: 0 4px 0 #000, 0 0 16px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1);
+      width: 56px; height: 56px;
+      background: #1a202c;
+      border-radius: 8px;
+      border: 2px solid #4a5568;
+      border-bottom: 4px solid #000;
       position: relative;
     }
     /* 3×3 标志 */
@@ -657,16 +651,16 @@
       letter-spacing: 1px;
     }
 
-    .bullet-black { background: #1a202c; box-shadow: 0 0 12px #4a5568, 0 0 24px rgba(74,85,104,0.8); width: 14px; height: 14px; }
+    .bullet-black { background: linear-gradient(to top, #a0aec0 40%, rgba(160,174,192,0)); box-shadow: 0 0 7px #718096; width: 7px; height: 24px; }
 
     /* 紫色十字方块 */
+    /* 紫色方块 — 扁平 */
     .purple-block {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, #9f7aea, #805AD5, #6b46c1);
-      border-radius: 7px;
-      border: 3px solid #b794f4;
-      box-shadow: 0 4px 0 #44337a, 0 0 16px rgba(159,122,234,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+      width: 56px; height: 56px;
+      background: #805AD5;
+      border-radius: 8px;
+      border: 2px solid #6b46c1;
+      border-bottom: 4px solid #44337a;
       position: relative;
     }
     .purple-block::before {
@@ -679,7 +673,7 @@
       font-size: 22px;
       color: rgba(255,255,255,0.85);
     }
-    .bullet-purple { background: #805AD5; box-shadow: 0 0 12px #805AD5, 0 0 24px rgba(128,90,213,0.8); width: 14px; height: 14px; }
+    .bullet-purple { background: linear-gradient(to top, #805AD5 40%, rgba(128,90,213,0)); box-shadow: 0 0 7px #805AD5; width: 7px; height: 24px; }
 
     /* 胜利界面奖励展示 */
     #victory-reward {
@@ -722,14 +716,13 @@
       line-height: 1.5;
     }
 
-    /* 灰色方块（与城墙同色） */
+    /* 灰色方块 — 扁平 */
     .hexagon {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, #718096, #4a5568);
-      border-radius: 6px;
-      border: 3px solid #718096;
-      box-shadow: 0 4px 0 #2d3748, 0 0 10px rgba(113,128,150,0.4);
+      width: 56px; height: 56px;
+      background: #718096;
+      border-radius: 8px;
+      border: 2px solid #4a5568;
+      border-bottom: 4px solid #2d3748;
     }
 
     /* ===== 飞行动画图形 ===== */
@@ -740,19 +733,19 @@
       transition: none;
     }
 
-    /* ===== 子弹 ===== */
+    /* ===== 子弹 — 细长拖尾 ===== */
     .bullet {
       position: fixed;
       pointer-events: none;
       z-index: 998;
-      border-radius: 50%;
-      width: 10px;
-      height: 14px;
+      border-radius: 3px;
+      width: 5px;
+      height: 20px;
     }
-    .bullet-square   { background: #F6C026; box-shadow: 0 0 8px #F6C026, 0 0 16px rgba(246,192,38,0.6); }
-    .bullet-triangle { background: #E53E3E; box-shadow: 0 0 8px #E53E3E, 0 0 16px rgba(229,62,62,0.6); }
-    .bullet-circle   { background: #4299E1; box-shadow: 0 0 8px #4299E1, 0 0 16px rgba(66,153,225,0.6); }
-    .bullet-hexagon  { background: #718096; box-shadow: 0 0 8px #718096, 0 0 16px rgba(113,128,150,0.6); }
+    .bullet-square   { background: linear-gradient(to top, #F6C026 40%, rgba(246,192,38,0)); box-shadow: 0 0 5px #F6C026; }
+    .bullet-triangle { background: linear-gradient(to top, #E53E3E 40%, rgba(229,62,62,0));  box-shadow: 0 0 5px #E53E3E; }
+    .bullet-circle   { background: linear-gradient(to top, #4299E1 40%, rgba(66,153,225,0)); box-shadow: 0 0 5px #4299E1; }
+    .bullet-hexagon  { background: linear-gradient(to top, #718096 40%, rgba(113,128,150,0)); box-shadow: 0 0 5px #718096; }
 
     /* ===== 子弹数量徽章 ===== */
     .bullet-badge {
@@ -781,6 +774,11 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
+      animation: conv-enter 0.2s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes conv-enter {
+      from { transform: translateY(-50%) scale(0.5); opacity: 0; }
+      to   { transform: translateY(-50%) scale(1);   opacity: 1; }
     }
 
     /* UI格子图形可点击 */
@@ -802,14 +800,21 @@
       justify-content: center;
     }
 
-    /* 敌人消除闪烁 */
+    /* 敌人消除 — 扁平破碎感 */
     @keyframes enemy-hit {
-      0%   { transform: scale(1);   filter: brightness(1); }
-      30%  { transform: scale(1.3); filter: brightness(3); }
-      60%  { transform: scale(0.8); filter: brightness(2); opacity: 0.6; }
-      100% { transform: scale(0);   opacity: 0; }
+      0%   { transform: scale(1)    rotate(0deg);   opacity: 1; filter: brightness(1); }
+      15%  { transform: scale(1.25) rotate(-8deg);  opacity: 1; filter: brightness(2.5); }
+      40%  { transform: scale(0.9)  rotate(5deg);   opacity: 0.8; }
+      70%  { transform: scale(0.5)  rotate(-4deg);  opacity: 0.4; filter: brightness(1); }
+      100% { transform: scale(0)    rotate(0deg);   opacity: 0; }
     }
-    .enemy-dying { animation: enemy-hit 0.35s ease-out forwards; }
+    .enemy-dying { animation: enemy-hit 0.3s cubic-bezier(0.4,0,0.2,1) forwards; }
+
+    /* 命中时格子闪白 */
+    @keyframes cell-flash {
+      0%,100% { filter: brightness(1); }
+      50%      { filter: brightness(2.5); }
+    }
 
     /* ===== 游戏计时器 ===== */
     #game-timer {
@@ -1170,8 +1175,18 @@
     }
 
     @keyframes victory-pop {
-      from { transform: scale(0.3); opacity: 0; }
-      to   { transform: scale(1);   opacity: 1; }
+      0%   { transform: scale(0.2) translateY(10px); opacity: 0; }
+      60%  { transform: scale(1.05) translateY(-2px); opacity: 1; }
+      100% { transform: scale(1) translateY(0);      opacity: 1; }
+    }
+
+    /* 界面整体淡入上移 */
+    @keyframes screen-in {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .screen.show {
+      animation: screen-in 0.25s cubic-bezier(0.4,0,0.2,1) both;
     }
 
     #victory-stars {
@@ -2171,16 +2186,18 @@
     document.body.appendChild(flying);
 
     requestAnimationFrame(() => {
-      flying.style.transition = `left .3s cubic-bezier(.4,0,.2,1), top .3s cubic-bezier(.34,1.4,.64,1)`;
-      flying.style.left = targetX + 'px';
-      flying.style.top  = targetY + 'px';
+      // 丝滑弧线飞入：水平线性，垂直弹性
+      flying.style.transition = `left .28s cubic-bezier(.4,0,.6,1), top .28s cubic-bezier(.34,1.2,.64,1), transform .28s ease`;
+      flying.style.left      = targetX + 'px';
+      flying.style.top       = targetY + 'px';
+      flying.style.transform = 'scale(0.85)';
     });
 
     setTimeout(() => {
       document.body.removeChild(flying);
       sfxLaunch();
       placeOnConveyor(type, bullets);
-    }, 320);
+    }, 300);
   }
 
   // ===================================================
