@@ -588,9 +588,9 @@
       position: relative;
     }
 
-    /* 底部方块不显示子弹数量 */
+    /* 底部四个方块显示子弹数量 */
     #bottom-shapes .bottom-shape .bullet-badge {
-      display: none !important;
+      display: flex;
     }
 
     .bottom-shape.locked {
@@ -1786,18 +1786,18 @@
       <div class="bottom-shape" data-slot="2"></div>
       <div class="bottom-shape" data-slot="3"></div>
     </div>
-    <!-- 特殊方块行：灰色方块 + 黑色方块 + 紫色方块 -->
-    <div id="special-slot-row">
+    <!-- 特殊方块行：灰色方块 + 黑色方块 + 紫色方块（默认隐藏，解锁后显示） -->
+    <div id="special-slot-row" style="display:none">
       <!-- 灰色方块（城墙前敌人全消灭后解锁） -->
-      <div id="hexagon-slot" class="bottom-shape" data-slot="hexagon" data-type="hexagon" onclick="onHexagonSlotClick()">
+      <div id="hexagon-slot" class="bottom-shape" data-slot="hexagon" data-type="hexagon" onclick="onHexagonSlotClick()" style="display:none">
         <div class="shape hexagon" style="width:56px;height:56px"></div>
       </div>
       <!-- 黑色方块专属（第2关后解锁） -->
-      <div id="black-slot" class="bottom-shape locked" data-slot="black" data-type="black" onclick="onBlackSlotClick()">
+      <div id="black-slot" class="bottom-shape" data-slot="black" data-type="black" onclick="onBlackSlotClick()" style="display:none">
         <div class="shape black-block" style="width:56px;height:56px"></div>
       </div>
       <!-- 紫色方块专属（第3关后解锁） -->
-      <div id="purple-slot" class="bottom-shape locked" data-slot="purple" data-type="purple" onclick="onPurpleSlotClick()">
+      <div id="purple-slot" class="bottom-shape" data-slot="purple" data-type="purple" onclick="onPurpleSlotClick()" style="display:none">
         <div class="shape purple-block" style="width:56px;height:56px"></div>
       </div>
     </div>
