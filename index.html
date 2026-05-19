@@ -532,21 +532,10 @@
     }
 
     /* 黑块冷却计数（可用次数） */
-    #black-slot .black-count {
-      position: absolute;
-      top: -6px;
-      right: -6px;
-      min-width: 20px;
-      height: 20px;
-      background: #2d3748;
-      color: #e2e8f0;
-      font-size: 11px;
-      font-weight: bold;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 4px;
+    #black-slot .black-count,
+    #purple-slot .black-count,
+    #purple-slot .purple-count {
+      display: none !important;
       border: 2px solid #4a5568;
       pointer-events: none;
     }
